@@ -7,9 +7,15 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import SearchIcon from '@material-ui/icons/Search';
 import ChatList from './components/Chatlist/ChatList';
 import ChatIntro from './components/ChatIntro/ChatIntro';
+import ChatWindow from './components/ChatWindow/ChatWindow';
 
 const App = () => {
-  const [chatlists, setChatlists] = useState([{},{},{},{},{},{},{},{},{},{},{},{},{},{},{}]);
+  const [chatlists, setChatlists] = useState([
+    {chatId: 1, title: 'Benny', image: '', },
+    {chatId: 2, title: 'Ardi', image: '', },
+    {chatId: 3, title: 'Santo', image: '', }
+  ]);
+  const [activeChat, setActiveChat] = useState({});
 
   return (
     <div className="app">
@@ -38,12 +44,14 @@ const App = () => {
 
         <div className="chatLists">
           {chatlists.map((chatlist, key) => (
-            <ChatList key={key} />
+            <ChatList key={key} data={chatlist} active={activeChat.chatId === chatlists[key].chatId} onClick={() => setActiveChat(chatlists[key])} />
           ))}
         </div>
       </div>
       <div className="app__content">
-        <ChatIntro />
+        {activeChat.chatId !== undefined && <ChatWindow /> }
+        {activeChat.chatId === undefined && <ChatIntro /> }
+        
       </div>
     </div>
   )
