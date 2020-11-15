@@ -6,6 +6,7 @@ import ChatIcon from '@material-ui/icons/Chat';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import SearchIcon from '@material-ui/icons/Search';
 import ChatList from './components/Chatlist/ChatList';
+import ChatIntro from './components/ChatIntro/ChatIntro';
 
 const App = () => {
   const [chatlists, setChatlists] = useState([{},{},{},{},{},{},{},{},{},{},{},{},{},{},{}]);
@@ -42,7 +43,7 @@ const App = () => {
         </div>
       </div>
       <div className="app__content">
-        <h2>content</h2>
+        <ChatIntro />
       </div>
     </div>
   )
