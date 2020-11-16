@@ -10,6 +10,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background-color: #ededed;
+  position: relative;
+  z-index: 10;
 }
 
 .chatWindow__headerInfo {
@@ -51,23 +54,44 @@
 .chatWindow__body {
   flex: 1;
   overflow-y: auto;
+  width: 100%;
+  height: 100%;
   background-color: #e5ddd4;
+  padding: 20px 30px;
 }
 
-.chatWindow__bg {
+.chatWindow__body::after {
+  content: '';
   background-position: top;
+  background-repeat: repeat;
   background-image: url('https://web.whatsapp.com/img/bg-chat-tile-light_686b98c9fdffef3f63127759e2057750.png');
   height: 100%;
   width: 100%;
   opacity: .06;
   top: 0;
+  left: 0;
+  position: absolute;
+}
+
+.chatWindow__body::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.chatWindow__body::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, .2);
+}
+
+.chatWindow__message {
+  position: relative;
 }
 
 .chatWindow__footer {
   height: 62px;
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
+  background-color: #ededed;
+  z-index: 10;
 }
 
 .chatWindow__pre {

@@ -16,12 +16,17 @@ const App = () => {
     {chatId: 3, title: 'Santo', image: '', }
   ]);
   const [activeChat, setActiveChat] = useState({});
+  const [user, setUser] = useState({
+    id: 122,
+    avatar: '',
+    name: 'Santo'
+  });
 
   return (
     <div className="app">
       <div className="app__sidebar">
         <header>
-          <Avatar className="header__avatar"/>
+          <Avatar className="header__avatar" scr={user.avatar}/>
           <div className="header__buttons">
             <div className="header__btn">
               <DonutLargeIcon style={{ color: '#919191' }} />
@@ -49,7 +54,7 @@ const App = () => {
         </div>
       </div>
       <div className="app__content">
-        {activeChat.chatId !== undefined && <ChatWindow /> }
+        {activeChat.chatId !== undefined && <ChatWindow user={user} /> }
         {activeChat.chatId === undefined && <ChatIntro /> }
         
       </div>

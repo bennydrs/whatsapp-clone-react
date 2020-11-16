@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import EmojiPicker from 'emoji-picker-react';
 import './ChatWindow.css';
 import { Avatar } from '@material-ui/core';
@@ -9,8 +9,12 @@ import InsertEmoticonIcon from '@material-ui/icons/InsertEmoticon';
 import CloseIcon from '@material-ui/icons/Close';
 import SendIcon from '@material-ui/icons/Send';
 import MicIcon from '@material-ui/icons/Mic';
+import MessageItem from './../MessageItem/MessageItem';
 
-const ChatWindow = () => {
+const ChatWindow = ({user}) => {
+
+  const body = useRef();
+
   // recognition speech
   let recognition = null;
   let SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -21,6 +25,39 @@ const ChatWindow = () => {
   const [emojiOpen, setEmojiOpen] = useState(false);
   const [text, setText] = useState('');
   const [listening, setListening] = useState(false);
+  const [lists, setLists] = useState([
+    {author: 123, body: 'lorem ipsum'},
+    {author: 123, body: 'bla bla'},
+    {author: 122, body: 'dsfdsf dafdf ada'},
+    {author: 123, body: 'lorem ipsum'},
+    {author: 123, body: 'bla bla'},
+    {author: 122, body: 'dsfdsf dafdf ada'},
+    {author: 123, body: 'lorem ipsum'},
+    {author: 123, body: 'bla bla'},
+    {author: 122, body: 'dsfdsf dafdf ada'},
+    {author: 123, body: 'lorem ipsum'},
+    {author: 123, body: 'bla bla'},
+    {author: 122, body: 'dsfdsf dafdf ada'},
+    {author: 123, body: 'lorem ipsum'},
+    {author: 123, body: 'bla bla'},
+    {author: 122, body: 'dsfdsf dafdf ada'},
+    {author: 123, body: 'lorem ipsum'},
+    {author: 123, body: 'bla bla'},
+    {author: 122, body: 'dsfdsf dafdf ada'},
+    {author: 123, body: 'lorem ipsum'},
+    {author: 123, body: 'bla bla'},
+    {author: 122, body: 'dsfdsf dafdf ada'},
+    {author: 123, body: 'lorem ipsum'},
+    {author: 123, body: 'bla bla'},
+    {author: 122, body: 'dsfdsf dafdf ada'},
+  ]);
+
+  useEffect(() => {
+    // auto scroll down to last message
+    if (body.current.scrollHeight > body.current.offsetHeight) {
+      body.current.scrollTop = body.current.scrollHeight - body.current.offsetHeight;
+    }
+  }, [lists]);
 
   const handleEmojiClick = (e, emojiObject) => {
     setText(text + emojiObject.emoji)
@@ -79,8 +116,10 @@ const ChatWindow = () => {
         </div>
       </div>
 
-      <div className="chatWindow__body">
-        <div className="chatWindow__bg"></div>
+      <div ref={body} className="chatWindow__body">
+        {lists.map((list, key) => (
+          <MessageItem key={key} data={list} user={user} />
+        ))}
       </div>
 
       <div className="chatWindow__emoji" style={{ height: emojiOpen ? '200px' : '0px' }}>
