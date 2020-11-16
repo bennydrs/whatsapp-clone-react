@@ -55,7 +55,7 @@
 }
 
 .chatWindow__bg {
-  background-position: center;
+  background-position: top;
   background-image: url('https://web.whatsapp.com/img/bg-chat-tile-light_686b98c9fdffef3f63127759e2057750.png');
   height: 100%;
   width: 100%;
@@ -67,6 +67,7 @@
   height: 62px;
   display: flex;
   align-items: center;
+  margin-bottom: 10px;
 }
 
 .chatWindow__pre {
