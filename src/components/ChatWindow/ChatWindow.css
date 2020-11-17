@@ -124,6 +124,8 @@
   height: 200px;
   overflow-y: hidden;
   transition: all .3s ease;
+  background-color: #ededed;
+  z-index: 9;
 }
 
 aside.emoji-picker-react {
