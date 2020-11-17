@@ -9,6 +9,8 @@ import ChatList from './components/Chatlist/ChatList';
 import ChatIntro from './components/ChatIntro/ChatIntro';
 import ChatWindow from './components/ChatWindow/ChatWindow';
 import NewChat from './components/NewChat/NewChat';
+import Login from './components/Login/Login';
+import Api from './Api';
 
 const App = () => {
   const [chatlists, setChatlists] = useState([
@@ -17,15 +19,25 @@ const App = () => {
     {chatId: 3, title: 'Santo', image: '', }
   ]);
   const [activeChat, setActiveChat] = useState({});
-  const [user, setUser] = useState({
-    id: 122,
-    avatar: '',
-    name: 'Santo'
-  });
+  const [user, setUser] = useState(null);
   const [showNewChat, setShowNewChat] = useState(false);
 
   const handleNewChat = () => {
     setShowNewChat(true);
+  }
+
+  const handleLoginData = async (user) => {
+    let newUser = {
+      id: user.uid,
+      name: user.displayName,
+      avatar: user.photoURL
+    };
+    await Api.addUser(newUser);
+    setUser(newUser);
+  }
+
+  if (user === null) {
+    return (<Login onReceive={handleLoginData} />);
   }
 
   return (
@@ -33,7 +45,7 @@ const App = () => {
       <div className="app__sidebar">
         <NewChat chatlists={chatlists} user={user} show={showNewChat} setShow={setShowNewChat} />
         <header>
-          <Avatar className="header__avatar" scr={user.avatar}/>
+          <Avatar className="header__avatar" src={user.avatar}/>
           <div className="header__buttons">
             <div className="header__btn">
               <DonutLargeIcon style={{ color: '#919191' }} />
