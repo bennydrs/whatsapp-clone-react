@@ -46,7 +46,7 @@ const App = () => {
   return (
     <div className="app">
       <div className="app__sidebar">
-        <NewChat chatlists={chatlists} user={user} show={showNewChat} setShow={setShowNewChat} setActiveChat={setActiveChat} />
+        <NewChat chatlists={chatlists} user={user} show={showNewChat} setShow={setShowNewChat} setActiveChat={setActiveChat} setChatlists={setChatlists} />
         <header>
           <Avatar className="header__avatar" src={user.avatar}/>
           <div className="header__buttons">

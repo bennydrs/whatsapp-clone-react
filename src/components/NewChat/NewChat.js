@@ -17,10 +17,9 @@ const NewChat = ({ user, chatlists, show, setShow, setActiveChat }) => {
     getList();
   }, [user]);
 
-  const addNewChat = async (user2, ls) => {
-    const found = ls.some(el => el.with === user2.id);
-    if (!found) Api.addNewChat(user, user2);
-
+  const addNewChat = async (user2) => {
+    const found = chatlists.some(el => el.with === user2.id);
+    if (!found) await Api.addNewChat(user, user2, setActiveChat);
     handleClose();
   }
 
@@ -38,7 +37,7 @@ const NewChat = ({ user, chatlists, show, setShow, setActiveChat }) => {
       </div>
       <div className="newChat__lists">
         {lists.map((list, key) => (
-          <div onClick={() => addNewChat(list, chatlists)} className="newChat__list" key={key}>
+          <div onClick={() => addNewChat(list)} className="newChat__list" key={key}>
             <Avatar className="newChat__listavatar" src={list.avatar} />
             <div className="newChat__listname">{list.name}</div>
           </div>

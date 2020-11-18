@@ -1,4 +1,3 @@
-import { NetworkWifiOutlined } from '@material-ui/icons';
 import firebase from 'firebase/app';
 import 'firebase/firebase-auth';
 import 'firebase/firebase-firestore';
@@ -40,7 +39,7 @@ export default {
     return list;
   },
 
-  addNewChat:async (user, user2) => {
+  addNewChat:async (user, user2, setActiveChat) => {
     let newChat = await db.collection('chats').add({
       messages:[],
       users:[user.id, user2.id]
@@ -63,9 +62,18 @@ export default {
         with: user.id
       })
     });
+
+    // get data user chatlist for open chat window when new chat 
+    db.collection('users').doc(user.id).onSnapshot((doc) => {
+      let data = doc.data();
+        const result = data.chats.find(obj => {
+          return obj.with === user2.id
+        })
+        setActiveChat(result);
+    });
   },
 
-  onChatList:(userId, setChatLists) => {
+  onChatList:(userId, setChatlists) => {
     return db.collection('users').doc(userId).onSnapshot((doc) => {
       if (doc.exists) {
         let data = doc.data();
@@ -86,7 +94,7 @@ export default {
             }
           });
 
-          setChatLists(data.chats);
+          setChatlists(data.chats);
         }
       }
     });
