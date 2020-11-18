@@ -1,3 +1,4 @@
+import { NetworkWifiOutlined } from '@material-ui/icons';
 import firebase from 'firebase/app';
 import 'firebase/firebase-auth';
 import 'firebase/firebase-firestore';
@@ -82,5 +83,18 @@ export default {
         setLists(data.messages)
       }
     })
+  },
+
+  sendMessage:(chatData, userId, type, body) => {
+    let now = new Date();
+
+    db.collection('chats').doc(chatData.chatId).update({
+      messages: firebase.firestore.FieldValue.arrayUnion({
+        type,
+        author: userId,
+        body,
+        date: now
+      })
+    });
   }
 }

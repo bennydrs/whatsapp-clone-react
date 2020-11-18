@@ -69,8 +69,18 @@ const ChatWindow = ({user, data}) => {
     }
   }
 
-  const handleSendClick = () => {
+  const handleInputKeyUp = (e) => {
+    if(e.keyCode === 13) {
+      handleSendClick();
+    }
+  } 
 
+  const handleSendClick = () => {
+    if (text !== '') {
+      Api.sendMessage(data, user.id, 'text', text);
+      setText('');
+      setEmojiOpen(false);
+    }
   }
 
   return (
@@ -118,7 +128,7 @@ const ChatWindow = ({user, data}) => {
           </div>
         </div>
         <div className="chatWindow__inputarea">
-          <input type="text" className="chatWindow__input" placeholder="Type a message" value={text} onChange={e => setText(e.target.value)} />
+          <input type="text" className="chatWindow__input" placeholder="Type a message" value={text} onChange={e => setText(e.target.value)} onKeyUp={handleInputKeyUp} />
         </div>
         <div className="chatWindow__pos">
           {text === '' &&
