@@ -27,6 +27,7 @@ const ChatWindow = ({user, data}) => {
   const [text, setText] = useState('');
   const [listening, setListening] = useState(false);
   const [lists, setLists] = useState([]);
+  const [users, setUsers] = useState([]);
 
   useEffect(() => {
     // auto scroll down to last message
@@ -37,7 +38,7 @@ const ChatWindow = ({user, data}) => {
 
   useEffect(() => {
     setLists([]);
-    let unsub = Api.onChatContent(data.chatId, setLists);
+    let unsub = Api.onChatContent(data.chatId, setLists, setUsers);
     return unsub;
   }, [data.chatId])
 
@@ -77,7 +78,7 @@ const ChatWindow = ({user, data}) => {
 
   const handleSendClick = () => {
     if (text !== '') {
-      Api.sendMessage(data, user.id, 'text', text);
+      Api.sendMessage(data, user.id, 'text', text, users);
       setText('');
       setEmojiOpen(false);
     }
