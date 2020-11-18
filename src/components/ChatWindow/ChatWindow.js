@@ -10,8 +10,9 @@ import CloseIcon from '@material-ui/icons/Close';
 import SendIcon from '@material-ui/icons/Send';
 import MicIcon from '@material-ui/icons/Mic';
 import MessageItem from './../MessageItem/MessageItem';
+import Api from '../../Api';
 
-const ChatWindow = ({user}) => {
+const ChatWindow = ({user, data}) => {
 
   const body = useRef();
 
@@ -25,32 +26,7 @@ const ChatWindow = ({user}) => {
   const [emojiOpen, setEmojiOpen] = useState(false);
   const [text, setText] = useState('');
   const [listening, setListening] = useState(false);
-  const [lists, setLists] = useState([
-    {author: 123, body: 'lorem ipsum'},
-    {author: 123, body: 'bla bla'},
-    {author: 122, body: 'dsfdsf dafdf ada'},
-    {author: 123, body: 'lorem ipsum'},
-    {author: 123, body: 'bla bla'},
-    {author: 122, body: 'dsfdsf dafdf ada'},
-    {author: 123, body: 'lorem ipsum'},
-    {author: 123, body: 'bla bla'},
-    {author: 122, body: 'dsfdsf dafdf ada'},
-    {author: 123, body: 'lorem ipsum'},
-    {author: 123, body: 'bla bla'},
-    {author: 122, body: 'dsfdsf dafdf ada'},
-    {author: 123, body: 'lorem ipsum'},
-    {author: 123, body: 'bla bla'},
-    {author: 122, body: 'dsfdsf dafdf ada'},
-    {author: 123, body: 'lorem ipsum'},
-    {author: 123, body: 'bla bla'},
-    {author: 122, body: 'dsfdsf dafdf ada'},
-    {author: 123, body: 'lorem ipsum'},
-    {author: 123, body: 'bla bla'},
-    {author: 122, body: 'dsfdsf dafdf ada'},
-    {author: 123, body: 'lorem ipsum'},
-    {author: 123, body: 'bla bla'},
-    {author: 122, body: 'dsfdsf dafdf ada'},
-  ]);
+  const [lists, setLists] = useState([]);
 
   useEffect(() => {
     // auto scroll down to last message
@@ -58,6 +34,12 @@ const ChatWindow = ({user}) => {
       body.current.scrollTop = body.current.scrollHeight - body.current.offsetHeight;
     }
   }, [lists]);
+
+  useEffect(() => {
+    setLists([]);
+    let unsub = Api.onChatContent(data.chatId, setLists);
+    return unsub;
+  }, [data.chatId])
 
   const handleEmojiClick = (e, emojiObject) => {
     setText(text + emojiObject.emoji)
@@ -95,8 +77,8 @@ const ChatWindow = ({user}) => {
     <div className="chatWindow">
       <div className="chatWindow__header">
         <div className="chatWindow__headerInfo">
-          <Avatar className="chatWindow__avatar" />
-          <div className="chatWindow__name">Benny</div>
+          <Avatar className="chatWindow__avatar" src={data.image} />
+          <div className="chatWindow__name">{data.title}</div>
         </div>
 
         <div className="chatWindow__headerButtons">

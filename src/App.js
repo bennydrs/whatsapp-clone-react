@@ -13,14 +13,21 @@ import Login from './components/Login/Login';
 import Api from './Api';
 
 const App = () => {
-  const [chatlists, setChatlists] = useState([
-    {chatId: 1, title: 'Benny', image: '', },
-    {chatId: 2, title: 'Ardi', image: '', },
-    {chatId: 3, title: 'Santo', image: '', }
-  ]);
+  const [chatlists, setChatlists] = useState([]);
   const [activeChat, setActiveChat] = useState({});
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({
+    id: 'LUP5b0M3lzgFfQeXigGrzdUOZDp1',
+    name: 'Benny',
+    avatar: 'https://graph.facebook.com/3663042823759061/picture'
+  });
   const [showNewChat, setShowNewChat] = useState(false);
+
+  useEffect(() => {
+    if (user !== null) {
+      let unsub = Api.onChatList(user.id, setChatlists);
+      return unsub;
+    }
+  }, [user]);
 
   const handleNewChat = () => {
     setShowNewChat(true);
@@ -73,7 +80,7 @@ const App = () => {
         </div>
       </div>
       <div className="app__content">
-        {activeChat.chatId !== undefined && <ChatWindow user={user} /> }
+        {activeChat.chatId !== undefined && <ChatWindow user={user} data={activeChat} /> }
         {activeChat.chatId === undefined && <ChatIntro /> }
         
       </div>
