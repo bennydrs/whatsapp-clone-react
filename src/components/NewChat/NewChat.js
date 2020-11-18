@@ -4,7 +4,7 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { Avatar } from '@material-ui/core';
 import Api from '../../Api';
 
-const NewChat = ({ user, chatlist, show, setShow }) => {
+const NewChat = ({ user, chatlists, show, setShow, setActiveChat }) => {
   const [lists, setlists] = useState([]);
 
   useEffect(() => {
@@ -17,8 +17,9 @@ const NewChat = ({ user, chatlist, show, setShow }) => {
     getList();
   }, [user]);
 
-  const addNewChat = async (user2) => {
-    await Api.addNewChat(user, user2);
+  const addNewChat = async (user2, ls) => {
+    const found = ls.some(el => el.with === user2.id);
+    if (!found) Api.addNewChat(user, user2);
 
     handleClose();
   }
@@ -37,7 +38,7 @@ const NewChat = ({ user, chatlist, show, setShow }) => {
       </div>
       <div className="newChat__lists">
         {lists.map((list, key) => (
-          <div onClick={() => addNewChat(list)} className="newChat__list" key={key}>
+          <div onClick={() => addNewChat(list, chatlists)} className="newChat__list" key={key}>
             <Avatar className="newChat__listavatar" src={list.avatar} />
             <div className="newChat__listname">{list.name}</div>
           </div>

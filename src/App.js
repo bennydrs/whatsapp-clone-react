@@ -15,11 +15,7 @@ import Api from './Api';
 const App = () => {
   const [chatlists, setChatlists] = useState([]);
   const [activeChat, setActiveChat] = useState({});
-  const [user, setUser] = useState({
-    id: 'LUP5b0M3lzgFfQeXigGrzdUOZDp1',
-    name: 'Benny',
-    avatar: 'https://graph.facebook.com/3663042823759061/picture'
-  });
+  const [user, setUser] = useState(null);
   const [showNewChat, setShowNewChat] = useState(false);
 
   useEffect(() => {
@@ -50,7 +46,7 @@ const App = () => {
   return (
     <div className="app">
       <div className="app__sidebar">
-        <NewChat chatlists={chatlists} user={user} show={showNewChat} setShow={setShowNewChat} />
+        <NewChat chatlists={chatlists} user={user} show={showNewChat} setShow={setShowNewChat} setActiveChat={setActiveChat} />
         <header>
           <Avatar className="header__avatar" src={user.avatar}/>
           <div className="header__buttons">
